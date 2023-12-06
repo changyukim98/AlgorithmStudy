@@ -21,6 +21,7 @@ public class Main {
 
     public static boolean isVps(String line) {
         Stack<Character> stack = new Stack<>();
+        int lineLen = line.length();
 
         for (int i = 0; i < line.length(); i++) {
             char next = line.charAt(i);
