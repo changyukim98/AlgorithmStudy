@@ -16,6 +16,8 @@ class Solution {
         int bridgeWeight = 0;
         // 모든 트럭을 다리에 올릴 때까지 반복
         for (int i = 0; i < truck_weights.length; ) {
+            // 매 시간마다 맨 앞의 트럭을 빼주어야함
+            // 실제 트럭이 아닌 더미 트럭이 빠지더라도 무게는 0이므로 결과는 변함 없음
             bridgeWeight -= queue.remove();
             // 이번 차를 다리에 올릴 수 있다면
             if (bridgeWeight + truck_weights[i] <= weight) {
@@ -26,7 +28,6 @@ class Solution {
                 // 이번에 트럭을 올리지 못했다면 더미 트럭을 다리에 올림.
                 queue.add(0);
             }
-            // 매 시간마다 맨 앞의 트럭을 빼주어야함
             time++;
         }
 
