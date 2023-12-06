@@ -12,9 +12,8 @@ class Solution {
                 if (st.isEmpty()) {
                     answer = false;
                     break;
-                } else if (st.pop() != '(') {
-                    answer = false;
-                    break;
+                } else {
+                    st.pop();
                 }
             }
         }
