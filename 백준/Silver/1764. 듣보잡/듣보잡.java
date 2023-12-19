@@ -1,5 +1,3 @@
-// https://www.acmicpc.net/problem/1764
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -24,7 +22,7 @@ public class Main {
             String input = br.readLine();
             if (set.contains(input)) list.add(input);
         }
-        list.sort(String::compareTo);
+        Collections.sort(list);
 
         StringBuilder sb = new StringBuilder(list.size() + "\n");
         for (String s : list) {
