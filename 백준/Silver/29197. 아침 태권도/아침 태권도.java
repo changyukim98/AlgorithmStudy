@@ -6,7 +6,6 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         int N = Integer.parseInt(br.readLine());
 
         Map<Integer, Set<Integer>> setMap = new HashMap<>();
@@ -18,7 +17,7 @@ public class Main {
 
             x /= gcd;
             y /= gcd;
-            setMap.putIfAbsent(x, new HashSet<>());
+            if (!setMap.containsKey(x)) setMap.put(x, new HashSet<>());
             Set<Integer> set = setMap.get(x);
             set.add(y);
         }
@@ -31,6 +30,9 @@ public class Main {
     }
 
     public static int calcGcd(int a, int b) {
+        a = Math.abs(a);
+        b = Math.abs(b);
+
         if (a < b) {
             int temp = a;
             a = b;
