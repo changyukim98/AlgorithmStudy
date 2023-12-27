@@ -25,6 +25,10 @@ class Solution {
             if (max == cnt[i]) list.add(i + 1);
         }
 
-        return list.stream().mapToInt(i -> i).toArray();
+        int[] result = new int[list.size()];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = list.get(i);
+        }
+        return result;
     }
 }
