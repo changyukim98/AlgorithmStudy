@@ -1,17 +1,16 @@
 class Solution {
     public int[] solution(int brown, int yellow) {
 
-        // 2*width + 2*height -4 = brown
-        // (width-2) * (height-2) = yellow
-        // 3 <= width <= (brown - 2) / 2
-        // 3 <= height <= (brown - 2) / 2
-        for (int i = 3; i <= (brown - 2) / 2; i++) {
-            for (int j = 3; j <= (brown - 2) / 2; j++) {
-                if ((i + j) * 2 - 4 == brown && (i - 2) * (j - 2) == yellow) {
-                    return new int[]{Math.max(i, j), Math.min(i, j)};
-                }
-            }
-        }
-        return null;
+        // (x - 2) * (y - 2) = yellow
+        // xy - 2x - 2y + 4 = yellow
+        // xy = yellow + brown
+        // 2(yellow+brown)/y + 2y - 4 = brown
+        // 2(yellow+brown) + 2y^2 - 4y = brown * y
+        // 2y^2 - (4+brown)y +2(yellow+brown) = 0
+        // y = 4+brown+sqrt((4+brown)^2-16(yellow+brown)) / 4
+
+        int x = (4 + brown + (int) Math.sqrt((4 + brown) * (4 + brown) - 16 * (yellow + brown))) / 4;
+        int y = (4 + brown - (int) Math.sqrt((4 + brown) * (4 + brown) - 16 * (yellow + brown))) / 4;
+        return new int[]{x, y};
     }
 }
