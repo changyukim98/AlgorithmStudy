@@ -15,31 +15,33 @@ class Solution {
         }
 
         set = new HashSet<>();
-        perm(numArray, numCount, 0, 0);
-        return set.size();
+        for (int i = 1; i <= numArray.length; i++) {
+            perm(numArray, numCount, i, 0, 0);
+        }
+        
+        int cnt = 0;
+        for (Integer i : set) {
+            if (isPrime(i)) cnt++;
+        }
+        return cnt;
     }
 
-    public void perm(int[] numArray, int[] numCount, int cur, int result) {
-        if (cur == numArray.length) {
-            if (isPrimary(result)) {
-                System.out.println(result);
-                set.add(result);
-            }
+    public void perm(int[] numArray, int[] numCount, int r, int cur, int result) {
+        if (cur == r) {
+            set.add(result);
             return;
         }
         for (int i = 0; i < numArray.length; i++) {
             int num = numArray[i];
             if (numCount[num] > 0) {
                 numCount[num]--;
-                perm(numArray, numCount, cur + 1, result * 10 + num);
+                perm(numArray, numCount, r, cur + 1, result * 10 + num);
                 numCount[num]++;
             }
         }
-        perm(numArray, numCount, cur + 1, result);
     }
 
-
-    public boolean isPrimary(int num) {
+    public boolean isPrime(int num) {
         if (num < 2) return false;
 
         for (int i = 2; i <= (int) Math.sqrt(num); i++) {
