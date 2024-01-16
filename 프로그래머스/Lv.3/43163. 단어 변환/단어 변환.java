@@ -1,10 +1,9 @@
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
 class Solution {
     private Queue<Integer> queue;
-    boolean[][] adjMap;
+    private boolean[][] adjMap;
     private boolean[] visited;
 
     public int solution(String begin, String target, String[] words) {
