@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    private static Set<Integer>[] adjMap;
+    private static List<Integer>[] adjMap;
     private static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
@@ -14,9 +14,9 @@ public class Main {
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
 
-        adjMap = new Set[N];
+        adjMap = new List[N];
         for (int i = 0; i < N; i++) {
-            adjMap[i] = new HashSet<>();
+            adjMap[i] = new ArrayList<>();
         }
 
         visited = new boolean[N];
