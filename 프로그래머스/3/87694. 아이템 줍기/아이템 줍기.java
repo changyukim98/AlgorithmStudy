@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -19,7 +18,7 @@ class Solution {
         for (int[] rect : rectangle) drawRectangle(rect);
         for (int[] rect : rectangle) crossValidation(rect);
         for (int[] rect : rectangle) fillRectangle(rect);
-        
+
         queue.offer(new int[]{characterY, characterX});
         visited[characterY][characterX] = true;
 
@@ -77,12 +76,12 @@ class Solution {
         int y_end = rectangle[3];
 
         for (int y = y_start + 1; y < y_end; y++) {
-            if ((map[y][x_start] & 1) == 1) map[y][x_start] -= 1;
-            if ((map[y][x_end] & 2) == 2) map[y][x_end] -= 2;
+            map[y][x_start] &= ~1;
+            map[y][x_end] &= ~2;
         }
         for (int x = x_start + 1; x < x_end; x++) {
-            if ((map[y_start][x] & 8) == 8) map[y_start][x] -= 8;
-            if ((map[y_end][x] & 4) == 4) map[y_end][x] -= 4;
+            map[y_start][x] &= ~8;
+            map[y_end][x] &= ~4;
         }
     }
 
