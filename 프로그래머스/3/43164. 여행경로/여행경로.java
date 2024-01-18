@@ -7,7 +7,7 @@ class Solution {
     }
 
     private final Map<String, TicketInfo> ticketMap = new HashMap<>();
-    private final List<String> result = new ArrayList<>();
+    private final Stack<String> result = new Stack<>();
     private int ticketsCount;
 
     public String[] solution(String[][] tickets) {
@@ -51,7 +51,7 @@ class Solution {
                 used.set(i, true);
                 result.add(next);
                 if (DFS(next, cnt + 1)) return true;
-                result.remove(result.size() - 1);
+                result.pop();
                 used.set(i, false);
             }
         }
