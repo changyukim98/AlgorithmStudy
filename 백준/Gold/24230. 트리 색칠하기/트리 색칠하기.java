@@ -1,14 +1,12 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
     private static List<Integer>[] edgesList;
     private static boolean[] visited;
+    private static Queue<int[]> queue;
     private static int[] colors;
     private static int answer = 0;
 
@@ -23,6 +21,7 @@ public class Main {
         }
         visited = new boolean[N + 1];
         colors = new int[N + 1];
+        queue = new LinkedList<>();
 
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 1; i <= N; i++) {
@@ -38,18 +37,23 @@ public class Main {
             edgesList[V].add(U);
         }
         if (colors[1] != 0) answer++;
-        DFS(1, colors[1]);
+        visited[1] = true;
+        queue.offer(new int[]{1, colors[1]});
+        BFS();
         System.out.println(answer);
     }
 
-    public static void DFS(int cur, int color) {
-        visited[cur] = true;
-
-        for (Integer i : edgesList[cur]) {
-            if (visited[i]) continue;
-            if (colors[i] != color) answer++;
-            visited[i] = true;
-            DFS(i, colors[i]);
+    public static void BFS() {
+        while (!queue.isEmpty()) {
+            int[] front = queue.poll();
+            int cur = front[0];
+            int color = front[1];
+            for (Integer i : edgesList[cur]) {
+                if (visited[i]) continue;
+                if (colors[i] != color) answer++;
+                visited[i] = true;
+                queue.offer(new int[]{i, colors[i]});
+            }
         }
     }
 }
