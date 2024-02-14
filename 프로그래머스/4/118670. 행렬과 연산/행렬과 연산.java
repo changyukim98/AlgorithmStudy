@@ -4,9 +4,9 @@ import java.util.LinkedList;
 
 class Solution {
     public int[][] solution(int[][] rc, String[] operations) {
-        Deque<Integer> left = new LinkedList<>();
-        Deque<Integer> right = new LinkedList<>();
-        Deque<Deque<Integer>> middleQueues = new LinkedList<>();
+        Deque<Integer> left = new ArrayDeque<>();
+        Deque<Integer> right = new ArrayDeque<>();
+        Deque<Deque<Integer>> middleQueues = new ArrayDeque<>();
 
         int width = rc[0].length;
         int height = rc.length;
