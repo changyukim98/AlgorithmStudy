@@ -1,57 +1,60 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-class Solution {
+public class Solution {
+    private int n;
+    private int m;
+    private final int[] dy = {-1, 1, 0, 0};
+    private final int[] dx = {0, 0, -1, 1};
+
     public int solution(int[][] maps) {
-        int N = maps.length;
-        int M = maps[0].length;
+        int answer = -1;
 
-        boolean[][] visited = new boolean[N][M];
-
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{0, 0, 1});
-        visited[0][0] = true;
-
-        int[] dy = {-1, 0, 0, 1};
-        int[] dx = {0, -1, 1, 0};
-
-        int min = Integer.MAX_VALUE;
-        while (!queue.isEmpty()) {
-            int[] nextInfo = queue.poll();
-            int y = nextInfo[0];
-            int x = nextInfo[1];
-            int distance = nextInfo[2];
-
-            if (y == N - 1 && x == M - 1) {
-                min = Math.min(min, distance);
+        n = maps.length;
+        m = maps[0].length;
+        boolean[][] visited = new boolean[n][m];
+        Queue<int[]> toVisit = new LinkedList<>();
+        // 처음은 항상 0, 0 이며, 첫 칸도 움직인걸로 판단한다.
+        toVisit.offer(new int[]{0, 0, 1});
+        while (!toVisit.isEmpty()) {
+            // 현재 위치로 방문한다.
+            int[] now = toVisit.poll();
+            int nowY = now[0];
+            int nowX = now[1];
+            // 다른 방향에서 온적 있다면 아무작업하지 않는다.
+            if (visited[nowY][nowX])
                 continue;
+            visited[nowY][nowX] = true;
+
+            int steps = now[2];
+            // 우하단에 도착했다면 기록하고 중단한다.
+            if (nowY == n - 1 && nowX == m - 1) {
+                answer = steps;
+                break;
             }
 
-            for (int d = 0; d < 4; d++) {
-                int newY = y + dy[d];
-                int newX = x + dx[d];
-
-                if (newY < 0 || newY >= N) continue;
-                if (newX < 0 || newX >= M) continue;
-                if (maps[newY][newX] != 1) continue;
-                if (visited[newY][newX]) continue;
-
-                visited[newY][newX] = true;
-                queue.add(new int[]{newY, newX, distance + 1});
+            // 다음에 방문할 점들을 기록한다.
+            for (int i = 0; i < 4; i++) {
+                int nextY = nowY + dy[i];
+                int nextX = nowX + dx[i];
+                if (
+                        // nextY와 nextX가 미로 내부에 있는지,
+                        checkBounds(nextY, nextX) &&
+                        // 이동 가능한 공간인지(1),
+                        maps[nextY][nextX] == 1 &&
+                        // 아직 방문하지 않았는지
+                        !visited[nextY][nextX]
+                ) {
+                    toVisit.offer(new int[]{nextY, nextX, steps + 1});
+                }
             }
         }
-        if (visited[N - 1][M - 1]) return min;
-        else return -1;
+        return answer;
     }
 
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        solution.solution(new int[][]{
-                {1, 0, 1, 1, 1},
-                {1, 0, 1, 0, 1},
-                {1, 0, 1, 1, 1},
-                {1, 1, 1, 0, 1},
-                {0, 0, 0, 0, 1}
-        });
+    private boolean checkBounds(int y, int x) {
+        return
+                -1 < y && y < n &&
+                -1 < x && x < m;
     }
 }
