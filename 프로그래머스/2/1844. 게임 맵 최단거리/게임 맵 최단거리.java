@@ -2,37 +2,30 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 class Solution {
-    public class Point {
-        int y, x;
-
-        public Point(int y, int x) {
-            this.y = y;
-            this.x = x;
-        }
-    }
-
-    private Queue<Point> queue = new LinkedList<>();
-    private int[] dy = {0, 0, -1, 1};
-    private int[] dx = {-1, 1, 0, 0};
-
     public int solution(int[][] maps) {
-        queue.offer(new Point(0, 0));
-        maps[0][0] = 0;
-        int result = BFS(maps, 1);
-        return result;
-    }
-
-    public int BFS(int[][] maps, int cnt) {
         int N = maps.length;
         int M = maps[0].length;
 
-        int size = queue.size();
-        while (size-- > 0) {
-            Point p = queue.poll();
-            int y = p.y;
-            int x = p.x;
+        boolean[][] visited = new boolean[N][M];
 
-            if (y == N - 1 && x == M - 1) return cnt;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{0, 0, 1});
+        visited[0][0] = true;
+
+        int[] dy = {-1, 0, 0, 1};
+        int[] dx = {0, -1, 1, 0};
+
+        int min = Integer.MAX_VALUE;
+        while (!queue.isEmpty()) {
+            int[] nextInfo = queue.poll();
+            int y = nextInfo[0];
+            int x = nextInfo[1];
+            int distance = nextInfo[2];
+
+            if (y == N - 1 && x == M - 1) {
+                min = Math.min(min, distance);
+                continue;
+            }
 
             for (int d = 0; d < 4; d++) {
                 int newY = y + dy[d];
@@ -40,14 +33,25 @@ class Solution {
 
                 if (newY < 0 || newY >= N) continue;
                 if (newX < 0 || newX >= M) continue;
-                if (maps[newY][newX] == 1) {
-                    maps[newY][newX] = 0;
-                    queue.offer(new Point(newY, newX));
-                }
+                if (maps[newY][newX] != 1) continue;
+                if (visited[newY][newX]) continue;
+
+                visited[newY][newX] = true;
+                queue.add(new int[]{newY, newX, distance + 1});
             }
         }
+        if (visited[N - 1][M - 1]) return min;
+        else return -1;
+    }
 
-        if (queue.isEmpty()) return -1;
-        else return BFS(maps, cnt + 1);
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        solution.solution(new int[][]{
+                {1, 0, 1, 1, 1},
+                {1, 0, 1, 0, 1},
+                {1, 0, 1, 1, 1},
+                {1, 1, 1, 0, 1},
+                {0, 0, 0, 0, 1}
+        });
     }
 }
