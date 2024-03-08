@@ -2,16 +2,19 @@ class Solution {
     private int cnt = 0;
 
     public int solution(int[] numbers, int target) {
-        DFS(numbers, 0, target, 0);
+        DFS(numbers, 0, 0, target);
         return cnt;
     }
 
-    public void DFS(int[] numbers, int cur, int target, int result) {
+    private void DFS(int[] numbers, int cur, int result, int target) {
         if (cur == numbers.length) {
-            if (result == target) cnt++;
+            if (result == target) {
+                cnt++;
+            }
             return;
         }
-        DFS(numbers, cur + 1, target, result + numbers[cur]);
-        DFS(numbers, cur + 1, target, result - numbers[cur]);
+
+        DFS(numbers, cur + 1, result + numbers[cur], target);
+        DFS(numbers, cur + 1, result - numbers[cur], target);
     }
 }
