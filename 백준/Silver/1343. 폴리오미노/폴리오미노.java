@@ -19,9 +19,11 @@ public class Main {
             }
             int aNum = token.length() / 4;
             int bNum = (token.length() - aNum * 4) / 2;
-
-            String replacement = "AAAA".repeat(aNum) + "BB".repeat(bNum);
-            board = board.replaceFirst("X+", replacement);
+            
+            StringBuilder replacement = new StringBuilder();
+            for (int i = 0; i < aNum; i++) replacement.append("AAAA");
+            for (int i = 0; i < bNum; i++) replacement.append("BB");
+            board = board.replaceFirst("X+", replacement.toString());
         }
 
         if (success) System.out.println(board);
